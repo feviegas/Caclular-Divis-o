@@ -3,11 +3,13 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Modelo.Divisao;
 import visao.JanelaCalculadora;
 
 public class DivisaoControle implements ActionListener {
 
 	private JanelaCalculadora janelaCalculadora;
+	private Divisao div = new Divisao();
 	
 	DivisaoControle(JanelaCalculadora janelaCalculadora){
 		this.janelaCalculadora = janelaCalculadora;
@@ -27,11 +29,15 @@ public class DivisaoControle implements ActionListener {
 			String strSegundoNumero = janelaCalculadora.getFieldSegundoNumero().getText();
 			double segundoNumero = Double.parseDouble(strSegundoNumero);
 			
+			div.setPrimeiroNumero(primeiroNumero);
+			div.setSegundoNumero(segundoNumero);
+			
+			
 			if (segundoNumero == 0) {
 				throw new ArithmeticException("Nao existe divisao por zero");
 			} else {
-				double resultado = primeiroNumero / segundoNumero;
-				janelaCalculadora.getResultados().setText(""+resultado);
+				div.calculo();
+				janelaCalculadora.getResultados().setText(" "+div.getResultado());
 			}
 		} catch (NumberFormatException exception) {
 			System.out.println("Formato invalido: " + exception.getMessage());
